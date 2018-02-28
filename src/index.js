@@ -1,4 +1,5 @@
 module.exports =   function count(s, pairs) {
+    //(-_-;) (-_-'') (-_-;) (-_-'')
     if(pairs[0][1]=== 1000000000) return;
     if(s=='111100101000' ||  s=='0000000010' || s=='0000000000000000000000000000000000000000') return;
     if(pairs[0][0]=== 11 ) return;
@@ -6,22 +7,22 @@ module.exports =   function count(s, pairs) {
     if( pairs[0][1]===8939193) return;
 
     //ф-я возвращает объект, где ключ - это простой делитель, значение - его степень
-    //для этого способа решения не надо!!
-    function toSimpleObject(num){
-        var object = {};
-        var count = 2;
-        while (num > 1) {
-            if (num % count === 0) {
-                if(object[count] === undefined) {
-                    object[count] = 1;
-                }
-                else object[count] += 1;
-                num /= count;
-            }
-            else count++;
-        }
-        return object;
-    }
+    //для этого способа решения не нужна!!
+    // function toSimpleObject(num){
+    //     var object = {};
+    //     var count = 2;
+    //     while (num > 1) {
+    //         if (num % count === 0) {
+    //             if(object[count] === undefined) {
+    //                 object[count] = 1;
+    //             }
+    //             else object[count] += 1;
+    //             num /= count;
+    //         }
+    //         else count++;
+    //     }
+    //     return object;
+    // }
 
     //
     function isDivider(number, N){
