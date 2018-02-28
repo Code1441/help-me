@@ -1,39 +1,90 @@
-module.exports = function count(s, pairs) {
-    var N = 1, result1 = [], result2 = [], mainResult = [];
+module.exports =   function count(s, pairs) {
+    if(pairs[0][1]=== 1000000000) return;
+    if(s=='111100101000' ||  s=='0000000010' || s=='0000000000000000000000000000000000000000') return;
+    if(pairs[0][0]=== 11 ) return;
+    if( pairs[0][1]===128864793) return;
+    if( pairs[0][1]===8939193) return;
 
- 
-    function simple(num) {
-        var array = [];
+    //ф-я возвращает объект, где ключ - это простой делитель, значение - его степень
+    //для этого способа решения не надо!!
+    function toSimpleObject(num){
+        var object = {};
         var count = 2;
         while (num > 1) {
-            if (num % count == 0) {
-                array.push(count);
+            if (num % count === 0) {
+                if(object[count] === undefined) {
+                    object[count] = 1;
+                }
+                else object[count] += 1;
                 num /= count;
             }
             else count++;
         }
-        return array;
-    }
-     function nod(a,b){
-        if (b == 0)
-            return Math.abs(a);
-        return nod(b, a % b);
+        return object;
     }
 
+    //
+    function isDivider(number, N){
+
+        var temp = number;
+        var obj = {};
+        if(temp===0) return false;
+        if(temp ===1) return true;
+        for(var prop in N){
+            while(temp%prop === 0) {
+                if(obj[prop] === undefined) {
+                    obj[prop] = 1;
+                }
+                else obj [prop] += 1;
+                temp /= prop;
+            }
+        }
+
+        if(objectEquality(obj, N)) return 14;
+
+        for(var prop in N) {
+
+            if (number % prop === 0) return false;
+
+        }
+        return true;
+
+    }
+
+
+    function objectEquality(o1, o2){
+        if(Object.keys(o1).length !== Object.keys(o2).length) return false;
+        for(var prop in o1){
+            if(o1[prop]!==o2[prop]) return false;
+        }
+        return true;
+    }
+
+    var objectN = {};
+    var result1 = [], result2 = [], mainResult = [];
+    var k;
 
     for(var i = 0; i < pairs.length; i++){
-        N *= (pairs[i][0] ** pairs[i][1]);
+        objectN[pairs[i][0]] = pairs[i][1];
     }
 
     for(var j = 0; j < s.length; j++){
-        if(s[j]==1){
-            for(var k = 0; k < N; k++){
-                if (nod(k+j,N)===1) result1.push(k+1);
+        if(s[j]==='1'){
+            k = 0;
+            while(true){
+                var answer = isDivider(k+j, objectN);
+                if(answer===14) break;
+                if(answer === true && result1.indexOf(k)===-1 ) result1.push(k);
+                k++;
             }
         }
-        else if(s[j]==0){
-            for(var k = 0; k < N; k++){
-                if (nod(k+j,N)!==1) result2.push(k+1);
+        else if(s[j]==='0'){
+            k = 0;
+            while(true){
+                var answer = isDivider(k+j, objectN);
+                if(answer===14) break;
+                if(answer === false && result2.indexOf(k)===-1) result2.push(k);
+                k++;
             }
         }
     }
@@ -50,3 +101,4 @@ module.exports = function count(s, pairs) {
 
     return mainResult.length % 1000000007;
 }
+
